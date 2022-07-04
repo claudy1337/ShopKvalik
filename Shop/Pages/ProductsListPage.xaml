@@ -1,0 +1,266 @@
+﻿<Page x:Class="Shop.Pages.ProductsListPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Shop.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="ProductsListPage">
+
+    <Border CornerRadius="100">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <TextBlock 
+                x:Name="TBlFio"
+                FontSize="15"
+                Foreground="Black"
+                Grid.Column="1"
+                Grid.ColumnSpan="2"
+                TextAlignment="Center"
+                Grid.Row="1"/>
+
+            <ComboBox  Width="100"
+                       Margin="80,0,0,0" 
+                       Name="SortCount"
+                       Height="30"
+                       SelectionChanged="SortCount_SelectionChanged">
+                <ComboBoxItem  Selected="ComboBoxItem_Selected" Content="Все" ></ComboBoxItem>
+                <ComboBoxItem Selected="ComboBoxItem_Selected" Content="2" ></ComboBoxItem>
+                <ComboBoxItem  Selected="ComboBoxItem_Selected" Content="3"></ComboBoxItem>
+                <ComboBoxItem Selected="ComboBoxItem_Selected" Content="4"></ComboBoxItem>
+            </ComboBox>
+
+            <Image Source= "/img/logo.jpg"
+                   Grid.ColumnSpan="2"
+                   Grid.Row="0"
+                   HorizontalAlignment="Left"/>
+
+            <TextBox x:Name="TBSearch"
+                     Grid.Row="0" 
+                     Grid.Column="1" 
+                     Margin="-70,0,0,0"
+                     Grid.ColumnSpan="2"
+                     Height="30" 
+                     Width="250"
+                     VerticalAlignment="Center" 
+                     SelectionChanged="TBSearch_SelectionChanged"/>
+
+            <Button x:Name="BtnAdd"
+                    Content="Новый продукт" 
+                    Foreground="Black"
+                    Grid.Column="3"
+                    Background="#FF553026"
+                    Grid.Row="0"
+                    Margin="10,10,10,10"
+                    Visibility="Visible"
+                    Click="BtnAdd_Click" 
+                    HorizontalAlignment="Right"
+                    Width="90"/>
+
+            <Button x:Name="BtnOrders"
+                    Content="Заказы" 
+                    Foreground="Black"
+                    Grid.Column="2"
+                    Background="#FF553026"
+                    Grid.Row="0"
+                    Margin="0,9,10,10"
+                    Visibility="Visible"
+                    Click="BtnOrders_Click" 
+                    HorizontalAlignment="Right"
+                    Width="90"/>
+
+
+            <Button x:Name="BtnMyOrders"
+                    Content="Мои заказы" 
+                    Foreground="Black"
+                    Grid.Column="2"
+                    Background="#FF553026"
+                    Grid.Row="1"
+                    Margin="0,9,10,10"
+                    Visibility="Visible"
+                    Click="BtnMyOrders_Click" 
+                    HorizontalAlignment="Right"
+                    Width="90"/>
+
+            <Button x:Name="BtnIntake"
+                    Content="Новая поставка" 
+                    Foreground="Black"
+                    Grid.Column="2"
+                    Background="#FF553026"
+                    Grid.Row="1"
+                    Margin="40,10,-90,10"
+                    Click="BtnIntakes_Click" 
+                    HorizontalAlignment="Right"
+                    Width="90"/>
+
+
+            <Button x:Name="BtnIntakes"
+                    Content="Постепления" 
+                    Foreground="Black"
+                    Grid.Column="2"
+                    Background="#FF553026"
+                    Grid.Row="1"
+                    Margin="40,10,-190,10"
+                    Click="BtnIntakes_Click_1" 
+                    HorizontalAlignment="Right"
+                    Width="90"/>
+
+
+
+            <Button x:Name="BtnOrder"
+                    Content="Заказать" 
+                    Foreground="Black"
+                    Grid.Column="3"
+                    Background="#FF553026"
+                    Grid.Row="0"
+                    Margin="10,10,10,10"
+                    Visibility="Visible"
+                    Click="BtnOrder_Click" 
+                    HorizontalAlignment="Left"
+                    Width="70"/>
+
+
+            <ListView x:Name="LVProducts" ItemsSource="{Binding products}" 
+                      Grid.Column="0"
+                      Grid.ColumnSpan="4" 
+                      Grid.Row="2" 
+                      Grid.RowSpan="5"
+                      SelectionChanged="LVProducts_SelectionChanged">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="№" 
+                                        DisplayMemberBinding="{Binding Id}"
+                                        Width="25"/>
+                        <GridViewColumn Header="Фото"
+                                        Width="110">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <Image Source="{Binding Photo}" Height="70"/>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                        <GridViewColumn Header="Наименование" 
+                                        Width="80"
+                                        DisplayMemberBinding="{Binding Name}"/>
+                        <GridViewColumn Header="Описание" 
+                                        DisplayMemberBinding="{Binding Description}"
+                                        Width="230"/>
+                        <GridViewColumn Header="Дата добавления" 
+                                        Width="110"
+                                        
+                                        DisplayMemberBinding="{Binding AddDate}"/>
+                        <GridViewColumn Header="Ед.измерения" Width="70"
+                                        DisplayMemberBinding="{Binding Unit.Name}"/>
+                        <GridViewColumn Header="Страна" Width="130">
+                            <GridViewColumn.CellTemplate>
+                                <DataTemplate>
+                                    <ListView ItemsSource="{Binding ProductCountry}">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate>
+                                                <Label Height="35"
+                                                   Width="100"
+                                                   Content="{Binding Country.Name}"
+                                                   Background="{Binding Country.Color}"/>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </DataTemplate>
+                            </GridViewColumn.CellTemplate>
+                        </GridViewColumn>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+
+            <TextBlock Text="По единнице измерения" 
+                       Grid.Row="7"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Center"/>
+
+            <ComboBox Name="CBUnit"
+                      Grid.Column="0"
+                      Grid.Row="7"
+                      HorizontalAlignment="Center" 
+                      VerticalAlignment="Center" 
+                      Width="120"
+                      SelectionChanged="CBUnit_SelectionChanged"/>
+
+            <TextBlock Text="По алфавиту" 
+                       Grid.Row="7"
+                       Grid.Column="1"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Center"/>
+
+            <ComboBox Name="CBAlphabet"
+                      Grid.Column="1"
+                      Grid.Row="7" 
+                      HorizontalAlignment="Center" 
+                      VerticalAlignment="Center"
+                      Width="120" 
+                      SelectionChanged="CBAlphabet_SelectionChanged">
+                <ComboBoxItem Content="Сбросить"/>
+                <ComboBoxItem Content="от А до Я"/>
+                <ComboBoxItem Content="от Я до А"/>
+            </ComboBox>
+
+            <TextBlock Text="По дате" 
+                       Grid.Row="7"
+                       Grid.Column="2"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Center"/>
+
+            <ComboBox Name="CBDate"
+                      Grid.Column="2" 
+                      Grid.Row="7" 
+                      Width="120"
+                      HorizontalAlignment="Center"
+                      VerticalAlignment="Center"
+                      SelectionChanged="CBDate_SelectionChanged">
+                <ComboBoxItem Content="Сбросить"/>
+                <ComboBoxItem Content="От старых к новым"/>
+                <ComboBoxItem Content="От новых к старым"/>
+            </ComboBox>
+
+            <CheckBox Name="CBMonth" 
+                      Content="В этом месяце"
+                      Grid.Column="3"
+                      Grid.Row="7" 
+                      HorizontalAlignment="Center" 
+                      VerticalAlignment="Center"
+                      Click="CBMonth_Click"/>
+
+            <Button Margin="-55,0,0,0"
+                    Content="&lt;"
+                    Width="25"
+                    Height="30"
+                    Name="BackListBtn"
+                    Click="BackListBtn_Click"/>
+
+
+            <Button Margin="15,0,0,0" 
+                    Content="&gt;" 
+                    Width="25"
+                    Grid.ColumnSpan="2"
+                    Height="30"
+                    Name="ForwardListBtn"
+                    Click="ForwardListBtn_Click"/>
+
+        </Grid>
+    </Border>
+</Page>
